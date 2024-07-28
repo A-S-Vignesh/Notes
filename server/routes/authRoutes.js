@@ -1,6 +1,7 @@
 // routes/authRouter.js
 import express from "express";
 import passport from "../config/passport.js";
+import { googleCallback, signout } from "../controllers/authController.js";
 
 const router = express.Router();
 
@@ -14,9 +15,18 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
-  (req, res) => {
-    res.redirect("/"); // Redirect to the homepage on successful authentication
-  }
+  googleCallback
 );
+
+router.get("/me", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json({ user: req.user });
+  } else {
+    res.status(401).json({ message: "Not authenticated" });
+  }
+});
+
+router.post("/logout", signout);
+
 
 export default router;

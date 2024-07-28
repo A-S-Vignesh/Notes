@@ -10,13 +10,13 @@ function useAddNotes() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", // This is necessary to send cookies with the request
+        credentials: "include",
         body: JSON.stringify({ title, description }),
       });
       if (!response.ok) {
-        throw new Error(data.message || "Server Error");
+        throw new Error("Server Error");
       }
-      const rawdata = await fetch(getNotesAPI);
+      const rawdata = await fetch(getNotesAPI,{credentials:"include"});
       const data = await rawdata.json();
       setNotes(data);
       console.log(await response.json());

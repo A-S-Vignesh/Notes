@@ -17,12 +17,12 @@ const AuthProvider = ({ children }) => {
 
   const signIn = () => {
     // Redirect to the correct URL
-    window.location.assign(`${import.meta.env.VITE_API_URL}/auth/google`);
+    window.location.assign(`${import.meta.env.VITE_API_URL}/api/auth/google`);
   };
 
   const signOut = () => {
     axios
-      .post(`${import.meta.env.VITE_API_URL}/auth/logout`, {}, { withCredentials: true })
+      .post(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {}, { withCredentials: true })
       .then(() => setUser(null))
       .catch((err) => console.error(err));
   };

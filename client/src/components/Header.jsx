@@ -12,7 +12,7 @@ function Header() {
       </div>
       <div className='flex-row'>
         <Login />
-        <DarkModeToggle />
+        {/* <DarkModeToggle /> */}
       </div>
     </div>
   );

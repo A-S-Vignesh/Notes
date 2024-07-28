@@ -31,7 +31,10 @@ const useFetchNotes = () => {
   const fetchData = async () => {
     // setLoading(true); // Set loading to true before starting fetch
     try {
-      const response = await fetch(getNotesAPI);
+      const response = await fetch(getNotesAPI, {
+        method: "GET",
+        credentials: "include",
+      });
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -41,14 +44,12 @@ const useFetchNotes = () => {
       setNotes(data);
     } catch (error) {
       // setError(error);
-    } 
+    }
   };
 
   useEffect(() => {
     fetchData();
   }, []); // Empty dependency array ensures this runs only on mount
-
-  
 
   // return { notes, loading, error }; // Return the data, loading state, and error
 };
