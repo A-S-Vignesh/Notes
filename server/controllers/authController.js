@@ -1,11 +1,9 @@
 import jwt from "jsonwebtoken";
 import User from "../database/models/user.js";
+import generateJWTandSetCookie from "../utils/generateJWTandSetCookies.js";
 
 export const googleCallback = (req, res) => {
-  const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, {  //id used in protectionRoute middleware
-    expiresIn: "1h",
-  });
-  res.cookie("jwt", token, { httpOnly: true });
+  generateJWTandSetCookie({ id: req.user._id }, res);
   res.redirect(`${process.env.FRONTEND_URL}/`);
 };
 

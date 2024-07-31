@@ -51,7 +51,7 @@ const useFetchNotes = () => {
     fetchData();
   }, []); // Empty dependency array ensures this runs only on mount
 
-  // return { notes, loading, error }; // Return the data, loading state, and error
+  
 };
 
 export default useFetchNotes;

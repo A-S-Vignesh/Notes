@@ -7,12 +7,12 @@ function Login() {
   const { user } = useContext(AuthContext); // Access the user from AuthContext
 
   return (
-    <div>
+    <>
       {!user ? (
         <SignIn /> // Show SignIn component if the user is not logged in
       ) : (
           
-          <div className="flex flex-row">
+          <div className="flex flex-row items-center justify-center">
           <img
             src={user.photo}
             alt="Profile"
@@ -22,7 +22,7 @@ function Login() {
           <SignOut />
         </div>
       )}
-    </div>
+    </>
   );
 }
 

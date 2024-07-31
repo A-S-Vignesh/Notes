@@ -1,13 +1,13 @@
 import { useState, useCallback, useEffect } from "react";
 import useStore from "../zustand/useStore";
 import useFetchNotes from "./useFetchNotes";
-import { deleteNoteAPI, getNotesAPI } from "../utils/constant";
+import { changeNoteAPI, getNotesAPI } from "../utils/constant";
 
 const useDeleteNotes = () => {
   const { setNotes } = useStore();
   const deleteNotes = async (id) => {
     try {
-      const response = await fetch(deleteNoteAPI(id), {
+      const response = await fetch(changeNoteAPI(id), {
         method: "DELETE",
         credentials: "include",
       });

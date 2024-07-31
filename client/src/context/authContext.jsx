@@ -1,10 +1,12 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import useStore from "../zustand/useStore"
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const { notes, setNotes } = useStore();
 
   useEffect(() => {
     axios
@@ -23,7 +25,11 @@ const AuthProvider = ({ children }) => {
   const signOut = () => {
     axios
       .post(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {}, { withCredentials: true })
-      .then(() => setUser(null))
+      .then(() => {
+        setUser(null)
+        setNotes(null)
+        
+      })
       .catch((err) => console.error(err));
   };
 

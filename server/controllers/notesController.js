@@ -50,3 +50,21 @@ export const deleteNotes = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const updateNotes = async (req, res) => {
+
+  const { title, description } = req.body;
+  try {
+    await Note.findByIdAndUpdate(req.query.id, { title, description })
+      .then(() => {
+      res.json({message:"Notes Updated"})
+      })
+      .catch((err) => {
+        throw new Error("Notes not updated");
+    })
+
+  }
+  catch (err) {
+    res.status(500).json({ status: 500, message: error.message });
+  }
+}

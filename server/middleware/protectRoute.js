@@ -8,7 +8,7 @@ const protectRoute = async (req, res, next) => {
     const token = req.cookies.jwt;
 
     if (!token) {
-      return res.status(401).json({ code: 401, error: "Unauthorized User! not tockon matched" });
+      return res.status(401).json({ code: 401, error: "Unauthorized User! token not matched" });
     }
 
     // Decode the token
@@ -18,7 +18,7 @@ const protectRoute = async (req, res, next) => {
     }
 
     // Find the user by using userID decoded from the token
-    const user = await User.findById(decoded.id);
+    const user = await User.findById(decoded.user.id);
     if (!user) {
       return res.status(404).json({ code: 404, error: "No user found!" });
     }

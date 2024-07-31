@@ -2,17 +2,21 @@ import React, { useState, useEffect } from "react";
 
 function DarkModeToggle() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    // Initialize state from localStorage
-    return localStorage.getItem("dark-mode") === "true";
+    const storedPreference = localStorage.getItem("dark-mode");
+    if (storedPreference !== null) {
+      return storedPreference === "true";
+    }
+
+    // If no preference is stored, use system preference
+    return (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    );
   });
 
   useEffect(() => {
     const htmlElement = document.documentElement;
-    if (isDarkMode) {
-      htmlElement.classList.add("dark");
-    } else {
-      htmlElement.classList.remove("dark");
-    }
+    htmlElement.classList.toggle("dark", isDarkMode);
     localStorage.setItem("dark-mode", isDarkMode);
   }, [isDarkMode]);
 
@@ -20,29 +24,53 @@ function DarkModeToggle() {
     setIsDarkMode((prevMode) => !prevMode);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      toggleDarkMode();
+    }
+  };
+
   return (
-    <button
-      id="dark-mode-toggle"
-      className="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-medium text-xs text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-transparent dark:text-white"
+    <div
+      role="checkbox"
+      aria-checked={isDarkMode ? "true" : "false"}
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
       onClick={toggleDarkMode}
+      className={`cursor-pointer w-11 h-5 bg-blue-500 dark:bg-gray-800 rounded-full relative px-1.5 flex items-center ${
+        isDarkMode ? "" : "justify-end"
+      }`}
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-      >
-        <path
-          fillRule="evenodd"
-          d="M10 2a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0V3a1 1 0 0 0-1-1Z"
-          clipRule="evenodd"
-        />
-        <path
-          d="M17.778 8.232a1 1 0 0 1-1.414-1.414L12 11.586l-4.364-4.364a1 1 0 1 1 1.414-1.414L16 10.172V3a1 1 0 1 1 2 0v7.172z"
-          clipRule="evenodd"
-        />
-      </svg>
-    </button>
+      <div
+        className={`w-4 h-4 rounded-full absolute transform duration-200 ease-out bg-white left-0.5 ${
+          isDarkMode ? "translate-x-6" : "translate-x-0"
+        }`}
+      />
+      {isDarkMode ? (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-3 w-3 text-white"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+        </svg>
+      ) : (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-3 w-3 text-white"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fillRule="evenodd"
+            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+            clipRule="evenodd"
+          />
+        </svg>
+      )}
+    </div>
   );
 }
 
