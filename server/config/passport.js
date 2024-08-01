@@ -11,7 +11,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL,
+      callbackURL: "https://notes-backend-alpha.vercel.app/api/auth/google/callback",
     },
     async (token, tokenSecret, profile, done) => {
       try {
