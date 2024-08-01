@@ -13,6 +13,9 @@ dotenv.config();
 const PORT = process.env.PORT||5500;
 const app = express()
 
+
+console.log("GOOGLE_CALLBACK_URL:", process.env.GOOGLE_CALLBACK_URL);
+
 app.use(express.json())
 app.use(cookieParser());
 app.use(cors({ credentials: true, origin: process.env.FRONTEND_URL })); 
