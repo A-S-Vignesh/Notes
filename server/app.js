@@ -14,7 +14,7 @@ const PORT = process.env.PORT||5500;
 const app = express()
 
 
-console.log("GOOGLE_CALLBACK_URL:", process.env.GOOGLE_CALLBACK_URL);
+
 
 app.use(express.json())
 app.use(cookieParser());
@@ -24,7 +24,8 @@ connectDB();
 
 
 
-app.get("/", (req,res) => {
+app.get("/", (req, res) => {
+  console.log("GOOGLE_CALLBACK_URL:", process.env.GOOGLE_CALLBACK_URL);
   res.send("Server is live at "+PORT+" port")
 })
 
