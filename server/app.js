@@ -34,7 +34,7 @@ connectDB();
 
 app.get("/", (req, res) => {
   console.log("GOOGLE_CALLBACK_URL:", process.env.GOOGLE_CALLBACK_URL);
-  res.send("Server is live at " + process.env.GOOGLE_CALLBACK_URL + " port");
+  res.send("Server is live at " + process.env.FRONTEND_URL + " port");
 })
 
 app.use(
