@@ -18,8 +18,14 @@ const app = express()
 
 app.use(express.json())
 app.use(cookieParser());
-app.use(cors({ credentials: true, origin: process.env.FRONTEND_URL })); 
-
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
+  })
+);
 connectDB();
 
 
