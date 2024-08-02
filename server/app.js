@@ -33,7 +33,7 @@ connectDB();
 
 
 app.get("/", (req, res) => {
-  res.send("Server is live at " + process.env.FRONTEND_URL + " port");
+  res.send("Server is live at " + 80 + " port");
 })
 
 app.use(
