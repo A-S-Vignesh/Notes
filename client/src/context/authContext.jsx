@@ -19,6 +19,7 @@ const AuthProvider = ({ children }) => {
 
   const signIn = () => {
     // Redirect to the correct URL
+    console.log("redirecting to backend " + import.meta.env.VITE_API_URL+"/api/auth/google");
     window.location.assign(`${import.meta.env.VITE_API_URL}/api/auth/google`);
   };
 
