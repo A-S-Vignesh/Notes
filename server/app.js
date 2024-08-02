@@ -26,6 +26,12 @@ app.use(
     allowedHeaders: "Content-Type,Authorization",
   })
 );
+
+app.use(
+  helmet({
+    referrerPolicy: { policy: "strict-origin-when-cross-origin" },
+  })
+);
 connectDB();
 
 
