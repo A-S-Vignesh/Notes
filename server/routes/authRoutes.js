@@ -15,7 +15,14 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
-  googleCallback
+  (req, res, next) => {
+    try {
+      googleCallback(req, res);
+    } catch (error) {
+      console.error("Google Callback Error:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
 );
 
 router.get("/me", (req, res) => {
