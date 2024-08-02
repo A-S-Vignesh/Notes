@@ -3,6 +3,7 @@ import User from "../database/models/user.js";
 import generateJWTandSetCookie from "../utils/generateJWTandSetCookies.js";
 
 export const googleCallback = (req, res) => {
+  console.log("User:", req.user);
   generateJWTandSetCookie({ id: req.user._id }, res);
   res.redirect(`${process.env.FRONTEND_URL}/`);
 };
