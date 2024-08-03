@@ -10,8 +10,6 @@ const generateJWTandSetCookie = (user, res) => {
     sameSite: "none", //CSRF- cross side request forgery attack
     secure: process.env.NODE_ENV === "production", //! true in production
   });
-
-  return token;
 };
 
 export default generateJWTandSetCookie;

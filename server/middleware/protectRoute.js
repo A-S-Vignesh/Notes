@@ -5,7 +5,7 @@ const protectRoute = async (req, res, next) => {
   try {
     console.log("Cookies received:", req.cookies);
 
-    const token = req.headers.authorization?.split(" ")[1];
+    const token = req.cookies.jwt;
     console.log("Token from cookies:", token);
 
     if (!token) {
