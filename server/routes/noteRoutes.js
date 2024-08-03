@@ -5,9 +5,9 @@ import protectRoute from "../middleware/protectRoute.js";
 
 const routes = express.Router();
 
-routes.get("/",protectRoute,displayNotes);
-routes.post("/",protectRoute, addNotes);
-routes.delete("/", protectRoute, deleteNotes);
+routes.get("/",displayNotes);
+routes.post("/", addNotes);
+routes.delete("/",deleteNotes);
 routes.put("/", updateNotes);
 
 
