@@ -22,6 +22,7 @@ router.get(
 router.get("/me",protectRoute, (req, res) => {
   console.log("Cookies on /me route:", req.cookies);
   console.log("Session on /me route:", req.session);
+  console.log("user:", req?.user);
 
   if (req.isAuthenticated()) {
     res.json({ user: req.user });
