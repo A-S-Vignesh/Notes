@@ -2,7 +2,7 @@ import Note from "../database/models/notes.js";
 
 export const displayNotes = async (req, res) => {
   try {
-    const notes = await Note.find(); //{ creator: req.user._id }
+    const notes = await Note.find({ creator: req.user._id }); //{ creator: req.user._id }
     // console.log(req.user._id);
     res.json(notes);
   } catch (error) {
