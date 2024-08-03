@@ -5,13 +5,13 @@ import generateJWTandSetCookie from "../utils/generateJWTandSetCookies.js";
 
 export const googleCallback = (req, res) => {
   console.log("User:", req.user);
-  generateJWTandSetCookie({ id: req.user._id }, res);
+  const token = generateJWTandSetCookie({ id: req.user._id }, res);
 
   // Log the cookies
   console.log("Cookies after setting JWT:", req.cookies);
   console.log("Session after setting JWT:", req.session);
 
-  res.redirect(`${process.env.FRONTEND_URL}/`);
+  res.redirect(`${process.env.FRONTEND_URL}/?token=${token}`);
 };
 
 export const signout = (req, res) => {
@@ -20,7 +20,8 @@ export const signout = (req, res) => {
   // Clear the JWT cookie
   res.clearCookie("jwt", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // true in production
+    secure: process.env.NODE_ENV === "production",
+    sameSite:"none",// true in production
   });
 
   if (req.session) {

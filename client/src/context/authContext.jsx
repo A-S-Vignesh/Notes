@@ -1,6 +1,7 @@
+// context/authContext.js
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
-import useStore from "../zustand/useStore"
+import useStore from "../zustand/useStore";
 
 const AuthContext = createContext();
 
@@ -9,30 +10,47 @@ const AuthProvider = ({ children }) => {
   const { notes, setNotes } = useStore();
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        console.log(response.data.user);
-        return setUser(response.data.user);
-      })
-      .catch(() => setUser(null));
+    const token = new URLSearchParams(window.location.search).get("token");
+    if (token) {
+      localStorage.setItem("jwt", token);
+    }
+    const storedToken = localStorage.getItem("jwt");
+    if (storedToken) {
+      axios
+        .get(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
+          headers: {
+            Authorization: `Bearer ${storedToken}`,
+          },
+          withCredentials: true,
+        })
+        .then((response) => {
+          console.log(response.data.user);
+          setUser(response.data.user);
+        })
+        .catch(() => setUser(null));
+    }
   }, []);
 
   const signIn = () => {
-    // Redirect to the correct URL
-    console.log("redirecting to backend " + import.meta.env.VITE_API_URL+"/api/auth/google");
+    console.log(
+      "Redirecting to backend " +
+        import.meta.env.VITE_API_URL +
+        "/api/auth/google"
+    );
     window.location.assign(`${import.meta.env.VITE_API_URL}/api/auth/google`);
   };
 
   const signOut = () => {
     axios
-      .post(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {}, { withCredentials: true })
+      .post(
+        `${import.meta.env.VITE_API_URL}/api/auth/logout`,
+        {},
+        { withCredentials: true }
+      )
       .then(() => {
-        setUser(null)
-        setNotes(null)
-        
+        localStorage.removeItem("jwt");
+        setUser(null);
+        setNotes(null);
       })
       .catch((err) => console.error(err));
   };
