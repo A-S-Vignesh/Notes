@@ -6,6 +6,7 @@ const protectRoute = async (req, res, next) => {
     console.log("Cookies received:", req.cookies);
     // Get the JWT from the cookies
     const token = req.cookies.jwt;
+    console.log("token for jwt cokies", req.cookies.jwt);
 
     if (!token) {
       return res.status(401).json({ code: 401, error: "Unauthorized User! token not matched" });
