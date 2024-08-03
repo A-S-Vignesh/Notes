@@ -7,16 +7,14 @@ import cookieParser from "cookie-parser";
 import apiRoutes from "./routes/index.js";
 import passport from "passport";
 
-
 dotenv.config();
 
-const PORT = process.env.PORT||5500;
-const app = express()
+const PORT = process.env.PORT || 5500;
+const app = express();
 
+connectDB();
 
-
-
-app.use(express.json())
+app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
@@ -27,27 +25,28 @@ app.use(
   })
 );
 
-
-connectDB();
-
-
-
 app.get("/", (req, res) => {
   res.send("Server is live at " + 80 + " port");
-})
+});
 
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    },
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/api", apiRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port `+PORT);
+  console.log(`Server is running on port ` + PORT);
 });
-
