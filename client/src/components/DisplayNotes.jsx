@@ -15,8 +15,8 @@ function DisplayNotes() {
           <DisplayNotesBox
             key={data._id}
             id={data._id}
-            title={decryptNote(user.googleId, data.title)}
-            content={decryptNote(user.googleId,data.description)}
+            title={decryptNote(user?.googleId, data.title)}
+            content={decryptNote(user?.googleId,data.description)}
           />
         ))}
       </div>
