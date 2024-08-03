@@ -23,12 +23,7 @@ router.get("/me",protectRoute, (req, res) => {
   console.log("Cookies on /me route:", req.cookies);
   console.log("Session on /me route:", req.session);
   console.log("user:", req?.user);
-
-  if (req.isAuthenticated()) {
-    res.json({ user: req.user });
-  } else {
-    res.status(401).json({ message: "Not authenticated" });
-  }
+    res.json({ user: req?.user });
 });
 
 router.post("/logout", signout);
