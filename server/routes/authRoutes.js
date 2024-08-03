@@ -2,6 +2,7 @@
 import express from "express";
 import passport from "../config/passport.js";
 import { googleCallback, signout } from "../controllers/authController.js";
+import protectRoute from "../middleware/protectRoute.js";
 
 const router = express.Router();
 
@@ -18,7 +19,7 @@ router.get(
   googleCallback
 );
 
-router.get("/me", (req, res) => {
+router.get("/me",protectRoute, (req, res) => {
   console.log("Cookies on /me route:", req.cookies);
   console.log("Session on /me route:", req.session);
 
