@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import DisplayNotesBox from "./DisplayNotesBox";
 import useStore from "../zustand/useStore";
-import { AuthContext } from "../context/authContext";
+import { AuthContext } from "../context/authContext"; 
 import { decryptNote } from "../utils/encryptAndDecrypt";
 
 function DisplayNotes() {
@@ -10,7 +10,7 @@ function DisplayNotes() {
 
   return (
     <div className="flex sm:flex-row items-center justify-center flex-wrap gap-6 sm:gap-x-10 lg:gap-x-16">
-      {notes?.length > 0 ? (
+      {user ? (
         notes.map((data) => {
           let decryptedTitle = "";
           let decryptedContent = "";
