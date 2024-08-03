@@ -5,6 +5,7 @@ import generateJWTandSetCookie from "../utils/generateJWTandSetCookies.js";
 export const googleCallback = (req, res) => {
   console.log("User:", req.user);
   generateJWTandSetCookie({ id: req.user._id }, res);
+  console.log("Cookies after setting JWT:", req.cookies);
   res.redirect(`${process.env.FRONTEND_URL}/`);
 };
 
