@@ -13,7 +13,10 @@ const AuthProvider = ({ children }) => {
       .get(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
         withCredentials: true,
       })
-      .then((response) => setUser(response.data.user))
+      .then((response) => {
+        console.log(response.data.user);
+        return setUser(response.data.user);
+      })
       .catch(() => setUser(null));
   }, []);
 
