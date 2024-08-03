@@ -1,3 +1,4 @@
+// controllers/authController.js
 import jwt from "jsonwebtoken";
 import User from "../database/models/user.js";
 import generateJWTandSetCookie from "../utils/generateJWTandSetCookies.js";
@@ -5,18 +6,23 @@ import generateJWTandSetCookie from "../utils/generateJWTandSetCookies.js";
 export const googleCallback = (req, res) => {
   console.log("User:", req.user);
   generateJWTandSetCookie({ id: req.user._id }, res);
+
+  // Log the cookies
   console.log("Cookies after setting JWT:", req.cookies);
+  console.log("Session after setting JWT:", req.session);
+
   res.redirect(`${process.env.FRONTEND_URL}/`);
 };
 
 export const signout = (req, res) => {
+  console.log("Cookies before clearing:", req.cookies);
+
   // Clear the JWT cookie
   res.clearCookie("jwt", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",  //true in production
+    secure: process.env.NODE_ENV === "production", // true in production
   });
 
-  // Optional: Destroy session if using session-based authentication
   if (req.session) {
     req.session.destroy((err) => {
       if (err) {
@@ -27,4 +33,6 @@ export const signout = (req, res) => {
   } else {
     res.redirect(process.env.FRONTEND_URL + "/");
   }
+
+  console.log("Cookies after clearing:", req.cookies);
 };
