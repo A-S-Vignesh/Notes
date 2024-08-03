@@ -11,7 +11,7 @@ function DisplayNotes() {
   return (
     <div className="flex sm:flex-row items-center justify-center flex-wrap gap-6 sm:gap-x-10 lg:gap-x-16">
       {user ? (
-        notes.map((data) => {
+        notes?.map((data) => {
           let decryptedTitle = "";
           let decryptedContent = "";
 
