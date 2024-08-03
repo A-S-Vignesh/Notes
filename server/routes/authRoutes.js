@@ -19,6 +19,9 @@ router.get(
 );
 
 router.get("/me", (req, res) => {
+  console.log("Cookies on /me route:", req.cookies);
+  console.log("Session on /me route:", req.session);
+
   if (req.isAuthenticated()) {
     res.json({ user: req.user });
   } else {
@@ -27,6 +30,5 @@ router.get("/me", (req, res) => {
 });
 
 router.post("/logout", signout);
-
 
 export default router;
